@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI智能垃圾分类指导系统</title>
+    <script src="https://cdn.tailwindcss.com/3.3.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.5.0/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .mobile-menu.active {
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-recycle text-2xl text-emerald-500 mr-2"></i>
+                <span class="text-xl font-bold">AI垃圾分类</span>
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="#overview" class="nav-link text-gray-600 hover:text-gray-900">项目概述</a>
+                <a href="#features" class="nav-link text-gray-600 hover:text-gray-900">核心功能</a>
+                <a href="#screenshots" class="nav-link text-gray-600 hover:text-gray-900">系统界面</a>
+                <a href="#architecture" class="nav-link text-gray-600 hover:text-gray-900">技术架构</a>
+                <a href="#contact" class="nav-link text-gray-600 hover:text-gray-900">联系方式</a>
+            </div>
+            
+            <button id="mobileMenuButton" class="md:hidden text-gray-600 focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+        
+        <!-- 移动端菜单 -->
+        <div id="mobileMenu" class="mobile-menu bg-white md:hidden">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="#overview" class="py-2 text-gray-600 hover:text-gray-900">项目概述</a>
+                <a href="#features" class="py-2 text-gray-600 hover:text-gray-900">核心功能</a>
+                <a href="#screenshots" class="py-2 text-gray-600 hover:text-gray-900">系统界面</a>
+                <a href="#architecture" class="py-2 text-gray-600 hover:text-gray-900">技术架构</a>
+                <a href="#contact" class="py-2 text-gray-600 hover:text-gray-900">联系方式</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <header class="py-16 md:py-24 bg-gradient-to-r from-blue-50 to-purple-50">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">基于AI的智能<span class="gradient-text">垃圾分类</span>指导系统</h1>
+                <p class="text-lg text-gray-600 mb-8">利用人工智能技术，帮助用户轻松实现垃圾分类，共建绿色环保生活</p>
+                <a href="#features" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition duration-300">
+                    了解功能 <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <img src="https://s.coze.cn/image/BtCSuoFUQlM/" alt="AI垃圾分类系统" class="w-full max-w-md rounded-xl shadow-lg">
+            </div>
+        </div>
+    </header>
+
+    <!-- 项目概述 -->
+    <section id="overview" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="glass-card p-8 md:p-10">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4">
+                        <i class="fas fa-info-circle text-xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold">项目概述</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <p class="text-gray-600 mb-4">随着环保意识的提升和垃圾分类政策的实施，如何正确分类垃圾成为公众面临的日常挑战。我们的智能垃圾分类指导系统应运而生，旨在通过AI技术简化垃圾分类流程。</p>
+                        <p class="text-gray-600 mb-4">系统结合计算机视觉和深度学习技术，能够快速准确地识别垃圾类型，并提供详细的分类指导，帮助用户养成正确的垃圾分类习惯。</p>
+                    </div>
+                    <div>
+                        <div class="bg-blue-50 rounded-xl p-4 mb-4">
+                            <h4 class="font-semibold text-blue-700 mb-2"><i class="fas fa-bullseye mr-2"></i>项目目标</h4>
+                            <p class="text-gray-700">通过技术创新解决垃圾分类难题，提高公众环保意识，促进资源回收利用。</p>
+                        </div>
+                        <div class="bg-purple-50 rounded-xl p-4">
+                            <h4 class="font-semibold text-purple-700 mb-2"><i class="fas fa-users mr-2"></i>目标用户</h4>
+                            <p class="text-gray-700">普通家庭用户、社区管理人员、环保教育机构等。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心功能 -->
+    <section id="features" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-4">核心功能</h2>
+            <p class="text-gray-600 text-center max-w-2xl mx-auto mb-12">系统集成了多项创新功能，为用户提供全方位的垃圾分类指导</p>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- 功能1 -->
+                <div class="glass-card p-6">
+                    <div class="feature-icon bg-blue-100 text-blue-600">
+                        <i class="fas fa-camera-retro text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">AI图像识别分类</h3>
+                    <p class="text-gray-600">通过手机摄像头拍摄垃圾照片，系统利用深度学习算法自动识别垃圾类型，并给出准确的分类建议。</p>
+                </div>
+                
+                <!-- 功能2 -->
+                <div class="glass-card p-6">
+                    <div class="feature-icon bg-purple-100 text-purple-600">
+                        <i class="fas fa-book text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">垃圾分类知识库</h3>
+                    <p class="text-gray-600">包含数千种常见垃圾的分类信息，提供详细的分类标准、处理方法和环保知识。</p>
+                </div>
+                
+                <!-- 功能3 -->
+                <div class="glass-card p-6">
+                    <div class="feature-icon bg-green-100 text-green-600">
+                        <i class="fas fa-user-graduate text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">用户指南与教育</h3>
+                    <p class="text-gray-600">提供图文并茂的分类指南、互动式学习模块和环保小贴士，帮助用户掌握垃圾分类技能。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 系统界面截图 -->
+    <section id="screenshots" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-4">系统界面</h2>
+            <p class="text-gray-600 text-center max-w-2xl mx-auto mb-12">直观友好的用户界面设计，提供流畅的使用体验</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://s.coze.cn/image/-ati1S1wZ4s/" alt="识别界面" class="w-full h-auto">
+                    <div class="p-4 bg-white">
+                        <h4 class="font-semibold">垃圾识别界面</h4>
+                        <p class="text-sm text-gray-600">拍照或上传图片进行垃圾识别</p>
+                    </div>
+                </div>
+                
+                <div class="rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://s.coze.cn/image/52jlnB_Thgo/" alt="结果界面" class="w-full h-auto">
+                    <div class="p-4 bg-white">
+                        <h4 class="font-semibold">分类结果展示</h4>
+                        <p class="text-sm text-gray-600">详细展示垃圾类别和处理建议</p>
+                    </div>
+                </div>
+                
+                <div class="rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://s.coze.cn/image/AXMq-8zTYiI/" alt="知识库界面" class="w-full h-auto">
+                    <div class="p-4 bg-white">
+                        <h4 class="font-semibold">分类知识库</h4>
+                        <p class="text-sm text-gray-600">丰富的垃圾分类知识和环保信息</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术架构 -->
+    <section id="architecture" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-4">技术架构</h2>
+            <p class="text-gray-600 text-center max-w-2xl mx-auto mb-12">基于前沿AI技术和现代软件架构构建</p>
+            
+            <div class="glass-card p-6">
+                <div id="mermaid-diagram" class="mermaid">
+                    graph TD
+                    A[用户端] -->|上传图片| B[AI识别服务]
+                    B --> C[图像预处理]
+                    C --> D[深度学习模型]
+                    D --> E[分类结果]
+                    E --> F[知识库查询]
+                    F --> G[分类建议]
+                    G --> A
+                    
+                    subgraph 后端系统
+                    B
+                    C
+                    D
+                    F
+                    end
+                    
+                    subgraph 数据存储
+                    H[(垃圾图像数据库)]
+                    I[(分类知识库)]
+                    end
+                    
+                    D --> H
+                    F --> I
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6 mt-8">
+                <div class="glass-card p-6">
+                    <h3 class="text-xl font-semibold mb-3"><i class="fas fa-brain text-blue-500 mr-2"></i>AI模型</h3>
+                    <p class="text-gray-600">基于ResNet50架构的深度学习模型，经过数十万张垃圾图片训练，识别准确率达95%以上。</p>
+                </div>
+                
+                <div class="glass-card p-6">
+                    <h3 class="text-xl font-semibold mb-3"><i class="fas fa-server text-purple-500 mr-2"></i>后端服务</h3>
+                    <p class="text-gray-600">采用微服务架构，使用Python Flask框架构建RESTful API，确保高并发处理能力。</p>
+                </div>
+                
+                <div class="glass-card p-6">
+                    <h3 class="text-xl font-semibold mb-3"><i class="fas fa-mobile-alt text-green-500 mr-2"></i>前端应用</h3>
+                    <p class="text-gray-600">响应式Web应用，兼容各种移动设备，提供流畅的用户体验。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系方式 -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="glass-card p-8 md:p-10 max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-8">联系我们</h2>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <div class="flex items-start mb-6">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-envelope text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-1">电子邮件</h4>
+                                <p class="text-gray-600">contact@aigarbage.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start mb-6">
+                            <div class="bg-purple-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-phone-alt text-purple-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-1">联系电话</h4>
+                                <p class="text-gray-600">400-123-4567</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-green-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-map-marker-alt text-green-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-1">办公地址</h4>
+                                <p class="text-gray-600">上海市浦东新区张江高科技园区</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <form class="space-y-4">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">姓名</label>
+                                <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">邮箱</label>
+                                <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-700 mb-1">留言</label>
+                                <textarea id="message" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                            </div>
+                            
+                            <button type="button" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300">
+                                发送消息 <i class="fas fa-paper-plane ml-2"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <div class="flex items-center">
+                        <i class="fas fa-recycle text-2xl text-emerald-400 mr-2"></i>
+                        <span class="text-xl font-bold">AI垃圾分类</span>
+                    </div>
+                    <p class="text-gray-400 mt-2">让垃圾分类更智能、更简单</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-weixin text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-weibo text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-6 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-2 md:mb-0">© 2024 AI垃圾分类系统. 保留所有权利.</p>
+                <div class="text-gray-400 text-sm">
+                    <span>页面内容均由 AI 生成，仅供参考</span>
+                    <span class="mx-2">|</span>
+                    <a href="https://space.coze.cn" class="hover:text-white transition">created by coze space</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单切换
+        document.getElementById('mobileMenuButton').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 关闭移动端菜单
+                    if (document.getElementById('mobileMenu').classList.contains('active')) {
+                        document.getElementById('mobileMenu').classList.remove('active');
+                    }
+                }
+            });
+        });
+        
+        // 初始化mermaid图表
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>
